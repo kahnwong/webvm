@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { get } from 'svelte/store';
 	import Nav from 'labs/packages/global-navbar/src/Nav.svelte';
-	import SideBar from '$lib/SideBar.svelte';
+	// import SideBar from '$lib/SideBar.svelte';
 	import '$lib/global.css';
 	import '@xterm/xterm/css/xterm.css'
 	import '@fortawesome/fontawesome-free/css/all.min.css'
@@ -596,15 +596,15 @@
 <main class="relative w-full h-full">
 	<Nav />
 	<div class="absolute top-10 bottom-0 left-0 right-0">
-		<SideBar on:connect={handleConnect} on:reset={handleReset} handleTool={handleTool}>
-			<slot></slot>
-		</SideBar>
-		{#if configObj.needsDisplay}
-			<div class="absolute top-0 bottom-0 left-14 right-0">
-				<canvas class="w-full h-full cursor-none" id="display"></canvas>
-			</div>
-		{/if}
-		<div class="absolute top-0 bottom-0 left-14 right-0 p-1 scrollbar" id="console">
+<!--		<SideBar on:connect={handleConnect} on:reset={handleReset} handleTool={handleTool}>-->
+<!--			<slot></slot>-->
+<!--		</SideBar>-->
+<!--		{#if configObj.needsDisplay}-->
+<!--			<div class="absolute top-0 bottom-0 left-14 right-0">-->
+<!--				<canvas class="w-full h-full cursor-none" id="display"></canvas>-->
+<!--			</div>-->
+<!--		{/if}-->
+		<div class="absolute top-0 bottom-0 left-0 right-0 p-1 scrollbar" id="console">
 		</div>
 	</div>
 </main>
