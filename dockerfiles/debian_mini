@@ -10,11 +10,13 @@ RUN apt-get -y install --no-install-recommends apt-utils gcc \
 
 # added by Karn Wong
 RUN apt-get -y install --no-install-recommends \
-    neovim cpufetch neofetch
+    neovim
 
 # doesn't work
 # - fish
 # - starship
+# - cpufetch
+# - neofetch
 
 RUN useradd -m user && echo "user:password" | chpasswd
 COPY --chown=user:user ./examples /home/user/examples
