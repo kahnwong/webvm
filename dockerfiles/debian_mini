@@ -10,7 +10,7 @@ RUN apt-get -y install --no-install-recommends apt-utils \
 
 # added by Karn Wong
 RUN apt-get -y install --no-install-recommends \
-    ripgrep
+    jq tree fd-find
 
 # works but not enough disk space
 # - golang-go
