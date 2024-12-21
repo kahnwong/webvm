@@ -10,6 +10,7 @@ RUN apt-get -y install --no-install-recommends apt-utils gcc \
 
 # added by Karn Wong
 RUN apt-get -y install --no-install-recommends \
+    golang-go \
     neovim
 
 # doesn't work
@@ -18,7 +19,7 @@ RUN apt-get -y install --no-install-recommends \
 
 RUN useradd -m user && echo "user:password" | chpasswd
 COPY --chown=user:user ./examples /home/user/examples
-RUN chmod -R +x  /home/user/examples/lua
+# RUN chmod -R +x  /home/user/examples/lua
 # We set WORKDIR, as this gets extracted by Webvm to be used as the cwd. This is optional.
 WORKDIR /home/user/
 # We set env, as this gets extracted by Webvm. This is optional.
