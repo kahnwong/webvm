@@ -2,6 +2,9 @@ name: Deploy
 
 # Define when the workflow should run
 on:
+  push:
+    branches:
+      - main
   # Allow manual triggering of the workflow from the Actions tab
   workflow_dispatch:
 
@@ -17,7 +20,7 @@ on:
         type: string
         description: 'Image size, 950M max'
         required: true
-        default: '600M'
+        default: '950M'
 
       DEPLOY_TO_GITHUB_PAGES:
         type: boolean
@@ -50,8 +53,8 @@ jobs:
           shell: bash
           run: |
             # We check whether the Dockerfile_path is valid. 
-            if [ ! -f ${{ github.event.inputs.DOCKERFILE_PATH }} ]; then
-                echo "::error title=Invalid Dockerfile path::No file found at ${{ github.event.inputs.DOCKERFILE_PATH }}"
+            if [ ! -f dockerfiles/debian_mini ]; then
+                echo "::error title=Invalid Dockerfile path::No file found at dockerfiles/debian_mini"
                 echo "terminate=true" >> $GITHUB_ENV
             fi
 
@@ -93,7 +96,7 @@ jobs:
 
     env:
       TAG: "ext2-webvm-base-image" # Tag of docker image.
-      IMAGE_SIZE: '${{ github.event.inputs.IMAGE_SIZE }}'
+      IMAGE_SIZE: '950M'
       DEPLOY_DIR: /webvm_deploy/ # Path to directory where we host the final image from.
 
     permissions: # Permissions to grant the GITHUB_TOKEN.
@@ -107,13 +110,13 @@ jobs:
       - name: Generate the image_name.
         id: image_name_gen
         run: |
-          echo "IMAGE_NAME=$(basename ${{ github.event.inputs.DOCKERFILE_PATH }})_$(date +%Y%m%d)_${{ github.run_id }}.ext2" >> $GITHUB_ENV
+          echo "IMAGE_NAME=$(basename dockerfiles/debian_mini)_$(date +%Y%m%d)_${{ github.run_id }}.ext2" >> $GITHUB_ENV
 
       # Create directory to host the image from.
       - run: sudo mkdir -p $DEPLOY_DIR
 
       # Build the i386 Dockerfile image.
-      - run: docker build . --tag $TAG --file ${{ github.event.inputs.DOCKERFILE_PATH }} --platform=i386
+      - run: docker build . --tag $TAG --file dockerfiles/debian_mini --platform=i386
       
       # Run the docker image so that we can export the container.
       # Run the Docker container with the Google Public DNS nameservers: 8.8.8.8, 8.8.4.4
@@ -226,7 +229,7 @@ jobs:
             ${{ env.IMAGE_NAME }}
 
   deploy_to_github_pages: # Job that deploys the github-pages artifact to github-pages.
-    if: ${{ github.event.inputs.DEPLOY_TO_GITHUB_PAGES == 'true' }}
+    # if: ${{ github.event.inputs.DEPLOY_TO_GITHUB_PAGES == 'true' }}
     needs: build
     environment:
       name: github-pages
