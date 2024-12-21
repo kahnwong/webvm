@@ -9,16 +9,8 @@ RUN apt-get -y install --no-install-recommends apt-utils \
 	less cowsay netcat-openbsd
 
 # added by Karn Wong
-RUN apt-get -y install --no-install-recommends
-
-# doesn't work
-# - fish
-# - starship
-# - cpufetch
-# - neofetch
-# - duf
-# - ncdu
-# - dust
+RUN apt-get -y install --no-install-recommends \
+    ripgrep
 
 # works but not enough disk space
 # - golang-go
