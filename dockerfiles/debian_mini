@@ -10,9 +10,11 @@ RUN apt-get -y install --no-install-recommends apt-utils gcc \
 
 # added by Karn Wong
 RUN apt-get -y install --no-install-recommends \
-    ca-certificates fish neovim
+    neovim
 
-RUN curl -sS https://starship.rs/install.sh | sh -s -- -y
+# doesn't work
+# - fish
+# - starship
 
 RUN useradd -m user && echo "user:password" | chpasswd
 COPY --chown=user:user ./examples /home/user/examples
