@@ -10,7 +10,7 @@ RUN apt-get -y install --no-install-recommends apt-utils gcc \
 
 # added by Karn Wong
 RUN apt-get -y install --no-install-recommends \
-    neovim
+    neovim du-dust
 
 # doesn't work
 # - fish
